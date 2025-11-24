@@ -14,13 +14,11 @@ int VariableExpression::evaluate(const VarState& state) const {
   return state.getValue(name_);
 }
 
-CompoundExpression::CompoundExpression(Expression* left, char op,
-                                       Expression* right)
-    : left_(left), right_(right), op_(op) {}
+CompoundExpression::CompoundExpression(std::unique_ptr<Expression> left, char op,
+                                       std::unique_ptr<Expression> right)
+    : left_(std::move(left)), right_(std::move(right)), op_(op) {}
 
 CompoundExpression::~CompoundExpression() {
-  delete left_;
-  delete right_;
 }
 
 int CompoundExpression::evaluate(const VarState& state) const {

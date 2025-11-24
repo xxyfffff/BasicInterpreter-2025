@@ -1,1 +1,1 @@
-// TODO: Imply interfaces declared in the Recorder.hpp.
+// TOD

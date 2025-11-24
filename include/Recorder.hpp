@@ -7,7 +7,7 @@
 #include "Statement.hpp"
 
 class Recorder {
- public:
+public:
   ~Recorder();
 
   void add(int line, Statement* stmt);
@@ -18,6 +18,6 @@ class Recorder {
   void printLines() const;
   int nextLine(int line) const noexcept;
 
- private:
+private:
   // TODO.
 };
