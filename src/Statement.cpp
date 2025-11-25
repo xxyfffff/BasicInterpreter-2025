@@ -11,7 +11,22 @@
 
 Statement::Statement(std::string source) : source_(std::move(source)) {}
 
-const std::string& Statement::text() const noexcept { return source_; }
+const std::string& Statement::text() const noexcept {
+  static std::string txt;
+  txt.clear();
+
+  size_t i = 0;
+  while (i < source_.size() && std::isdigit(source_[i])) {
+    ++i;
+  }
+  while (i < source_.size() && std::isspace(source_[i])) {
+    ++i;
+  }
+
+  txt = source_.substr(i);
+
+  return txt;
+}
 
 // TODO: Imply interfaces declared in the Statement.hpp.
 LETStatement::LETStatement(std::string source,

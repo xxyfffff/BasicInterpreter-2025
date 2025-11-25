@@ -55,7 +55,7 @@ void Recorder::clear() noexcept {
 
 void Recorder::printLines() const {
   for (auto& [line, stmt] : lineToStmt) {
-    std::cout << line << ": " << stmt->text() << std::endl;
+    std::cout << line << " " << stmt->text() << std::endl;
   }
 }
 
