@@ -20,4 +20,5 @@ public:
 
 private:
   // TODO.
+  std::map<int, Statement*> lineToStmt;
 };
