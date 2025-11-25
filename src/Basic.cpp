@@ -34,7 +34,20 @@ int main() {
         continue;
       }
       else if (line == "QUIT") {
-        break;
+        return 0;
+      }
+
+      // 处理立即执行语句
+      std::string tmp = line.substr(0, 3);
+      if (tmp == "LET" || tmp == "PRI" || tmp == "INP") {
+        TokenStream tokens = lexer.tokenize(line);
+        if (tokens.empty()) {
+          throw BasicError("SYNTAX ERROR");
+        }
+        std::unique_ptr<ParsedLine> parsedLine = parser.parseLine(tokens, line);
+        std::unique_ptr<Statement> stmt = parsedLine->fetchStatement();
+        program.execute(stmt.get());
+        continue;
       }
 
       // 处理程序行

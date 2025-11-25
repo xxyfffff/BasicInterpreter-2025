@@ -57,6 +57,7 @@ void Recorder::printLines() const {
   for (auto& [line, stmt] : lineToStmt) {
     std::cout << line << " " << stmt->text() << std::endl;
   }
+  return;
 }
 
 int Recorder::nextLine(int line) const noexcept {

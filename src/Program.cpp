@@ -30,11 +30,21 @@ void Program::run() {
       const Statement* curStmt = recorder_.get(programCounter_);
       if (!curStmt) {
         throw BasicError("SYNTAX ERROR");
-        break;
       }
+
+      int prePC = programCounter_;
       curStmt->execute(vars_, *this);
+      if (programCounter_ == prePC) {
+        int nextLine = recorder_.nextLine(programCounter_);
+        if (nextLine == -1) {
+          programEnd_ = true;
+        } else {
+          programCounter_ = nextLine;
+        }
+      }
     }
   }
+  else return;
 }
 
 void Program::list() const {
@@ -63,7 +73,7 @@ void Program::changePC(int line) {
     return;
   }
   if (!recorder_.hasLine(line)) {
-    throw BasicError("SYNTAX ERROR");
+    throw BasicError("LINE NUMBER ERROR");
     return;
   }
   programCounter_ = line;

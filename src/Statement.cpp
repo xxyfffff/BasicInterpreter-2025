@@ -60,10 +60,35 @@ INPUTStatement::INPUTStatement(std::string source,
   {}
 
 void INPUTStatement::execute(VarState& state, Program& program) const {
-  std::cout << '?' << std::endl;
-  int value;
-  std::cin >> value;
-  state.setValue(var, value);
+  bool valid = false;
+  while (!valid) {
+    std::string input;
+    std::cout << ' ' << '?' << ' ';
+    std::getline(std::cin,input);
+    bool flag = true;
+    int sign = 1;
+    int value = 0;
+    if (input[0] == '-') {
+      sign = -1;
+      input = input.substr(1);
+    }
+    for (auto c : input) {
+      if (c >= '0' && c <= '9') {
+        value = value * 10 + c - '0';
+        continue;
+      }
+      else {
+        flag = false;
+      }
+    }
+    if (flag) {
+      state.setValue(var, value * sign);
+      valid = true;
+    }
+    else {
+      std::cout << "INVALID NUMBER" << std::endl;
+    }
+  }
 }
 
 GOTOStatement::GOTOStatement(std::string source,
